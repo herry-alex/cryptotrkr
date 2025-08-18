@@ -15,6 +15,8 @@ from bs4 import BeautifulSoup
 from datetime import datetime, date
 from dateutil import parser
 import os
+import pandas as pd
+from datetime import datetime
 
 # ---------- CONFIG ----------
 DB_PATH = os.environ.get("TRACKER_DB", "predictions.db")
@@ -200,6 +202,18 @@ def insert_result(conn, prediction_id, actual_price, abs_error, pct_error):
     conn.commit()
     return c.lastrowid
 
+# ... your code that creates df with crypto data ...
+
+# Add a timestamp column (run date)
+df["date"] = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+
+filename = "crypto_data.csv"
+
+# If file exists, append without header
+if os.path.exists(filename):
+    df.to_csv(filename, mode="a", header=False, index=False)
+else:
+    df.to_csv(filename, index=False)
 
 # ---------- MAIN RUN ----------
 def main():
