@@ -26,3 +26,4 @@ jobs:
           COINMARKETCAP_API_KEY: ${{ secrets.COINMARKETCAP_API_KEY }}
         run: |
           python main.py
+          
