@@ -27,4 +27,12 @@ jobs:
           COINMARKETCAP_API_KEY: ${{ secrets.COINMARKETCAP_API_KEY }}
         run: |
           python main.py
-          
+
+      - name: Commit results
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add crypto_data.csv
+          git commit -m "Update crypto tracker data [skip ci]" || echo "No changes to commit"
+          git push
+
